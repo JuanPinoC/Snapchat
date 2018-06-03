@@ -23,11 +23,19 @@ class iniciarSesionViewController: UIViewController {
         Auth.auth().signIn(withEmail: emailTextField.text!, password: passwordTextField.text!) {
             (user, error) in print("Intentando Iniciar Sesion")
             if error != nil{
-                print("Se presento el siguiente error: \(error)")
+                self.mostrarAlerta(title: "Error", message: "El usuario o contraseña son incorrectos, o la cuenta no existe", action: "Cancelar")
             }else{
                 print("Inicio de Sesion Exitoso")
+                self.performSegue(withIdentifier: "iniciarsesionsegue", sender: nil)
             }
         }
+    }
+    
+    func mostrarAlerta(title: String, message: String, action: String){
+        let alertaGuia = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let cancelok = UIAlertAction(title: action, style: .default, handler: nil)
+        alertaGuia.addAction(cancelok)
+        present(alertaGuia, animated: true, completion: nil)
     }
 }
 
